@@ -1,13 +1,18 @@
 import React, {Component, ReactNode} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {sizeWidth, sizeHeight} from '../../helpers/size.helper';
 import Text from '../../components/common/text';
 
 export default class UserItem extends Component {
+  onUserPress = () => {
+    const {item, onUserPress} = this.props;
+    onUserPress(item);
+  };
+
   render(): ReactNode {
     const {item} = this.props;
     return (
-      <View style={styles.container}>
+      <TouchableOpacity onPress={this.onUserPress} style={styles.container}>
         <Image
           source={{uri: item.avatar}}
           resizeMode="stretch"
@@ -19,7 +24,7 @@ export default class UserItem extends Component {
           </Text>
           <Text style={styles.email}>{item.email}</Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, {Component, ReactNode} from 'react';
 import {View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import {resetPage} from '../../actions/nav.action';
+import {resetPage, navigateToPage} from '../../actions/nav.action';
 import {connect} from 'react-redux';
 import {sizeWidth, sizeHeight} from '../../helpers/size.helper';
 import {requestedUsers} from '../../actions/users.action';
@@ -53,8 +53,12 @@ class UsersScreen extends Component {
     );
   }
 
+  onUserPress = user => {
+    this.props.navigateToPage('User', {user});
+  };
+
   renderUser = ({item}) => {
-    return <UserItem item={item} />;
+    return <UserItem onUserPress={this.onUserPress} item={item} />;
   };
 
   loadNextPage = () => {
@@ -79,7 +83,7 @@ class UsersScreen extends Component {
 
 export default connect(
   state => ({users: state.users}),
-  {resetPage, requestedUsers},
+  {resetPage, navigateToPage, requestedUsers},
 )(UsersScreen);
 
 const styles = StyleSheet.create({
